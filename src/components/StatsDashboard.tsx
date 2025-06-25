@@ -6,7 +6,7 @@ const StatsDashboard: React.FC = () => {
   const tasks = useTaskStore((state) => state.tasks);
 
   const totalTasks = tasks.length;
-  const completedTasks = tasks.filter(t => t.progress === 100).length;
+  const completedTasks = tasks.filter(t => t.completedAt).length;
   const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
   const remainingTasks = totalTasks - completedTasks;
 
