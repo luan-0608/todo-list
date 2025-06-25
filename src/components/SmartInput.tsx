@@ -1,38 +1,13 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useTaskStore } from '../stores/taskStore';
 import { createRipple } from '../utils/rippleEffect';
+import { getSmartTask } from '../utils/api';
 import './SmartInput.css';
-
-// A simple NLP-like function to parse the task string
-const parseTaskString = (text: string) => {
-  const title = text.split(/#|!/)[0].trim();
-  
-  const tags = [...text.matchAll(/#(\w+)/g)].map(match => match[1]);
-  
-  const priorityMatch = text.match(/!(high|medium|low)/);
-  const priority = priorityMatch ? priorityMatch[1] as 'high' | 'medium' | 'low' : 'medium';
-
-  // Simple date parsing (not exhaustive)
-  const deadline = new Date();
-  if (text.includes('ngày mai')) {
-    deadline.setDate(deadline.getDate() + 1);
-  } else if (text.includes('hôm nay')) {
-    // keep today
-  }
-
-  return {
-    title,
-    description: '', // AI can fill this later
-    tags,
-    priority,
-    deadline: deadline.toISOString().split('T')[0],
-    progress: 0,
-  };
-};
-
 
 const SmartInput: React.FC = () => {
   const [value, setValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { addTask, aiConfig } = useTaskStore();
 
@@ -46,16 +21,38 @@ const SmartInput: React.FC = () => {
 
   const handleAnalyze = async (e: React.MouseEvent<HTMLButtonElement>) => {
     createRipple(e);
-    if (!value.trim()) return;
+    console.log('Bắt đầu phân tích...');
+    if (!value.trim() || isLoading) {
+      console.log('Bỏ qua: value rỗng hoặc đang tải.');
+      return;
+    }
 
-    // Here you would call the actual OpenAI-compatible API
-    // For now, we'll use the local parser
-    console.log('Phân tích với cấu hình:', aiConfig);
-    
-    const parsedTask = parseTaskString(value);
-    addTask(parsedTask);
-    
-    setValue(''); // Clear input after adding
+    setIsLoading(true);
+    setError(null);
+    console.log('Cấu hình AI hiện tại:', aiConfig);
+
+    try {
+      // Logic mới: Cho phép dùng mock API nếu URL và Key trống
+      if (!aiConfig.url && !aiConfig.apiKey) {
+        console.log('Sử dụng API giả lập (msw) vì URL và Key trống.');
+      } else if (!aiConfig.url || !aiConfig.apiKey || !aiConfig.model) {
+        // Yêu cầu cấu hình đầy đủ nếu một trong các trường đã được điền
+        throw new Error('Vui lòng cấu hình đầy đủ API URL, Key và Model trong cài đặt AI.');
+      }
+      
+      console.log('Đang gọi getSmartTask với:', { value, ...aiConfig });
+      const parsedTask = await getSmartTask(value, aiConfig.apiKey, aiConfig.url, aiConfig.model);
+      console.log('Nhận được công việc đã phân tích:', parsedTask);
+      
+      addTask(parsedTask);
+      setValue(''); // Xóa input sau khi thêm thành công
+    } catch (err: any) {
+      console.error('Lỗi khi phân tích:', err);
+      setError(err.message || 'Không thể phân tích công việc.');
+    } finally {
+      console.log('Kết thúc phân tích.');
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -66,8 +63,12 @@ const SmartInput: React.FC = () => {
         onChange={(e) => setValue(e.target.value)}
         placeholder="Nhập công việc... (VD: 'Thiết kế lại trang chủ vào ngày mai #design !high')"
         rows={1}
+        disabled={isLoading}
       />
-      <button onClick={handleAnalyze} className="ai-analyze-btn ripple-btn">Phân tích bằng AI</button>
+      <button onClick={handleAnalyze} className="ai-analyze-btn ripple-btn" disabled={isLoading}>
+        {isLoading ? 'Đang phân tích...' : 'Phân tích bằng AI'}
+      </button>
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };

@@ -30,17 +30,27 @@ import './App.css';
 type ViewMode = 'grid' | 'calendar';
 
 function App() {
-  const { tasks, setTasks, focusedTaskId, setFocusedTask, sortByDeadline, sortByPriority } = useTaskStore((state) => ({
+  const {
+    tasks,
+    setTasks,
+    focusedTaskId,
+    setFocusedTask,
+    sortByDeadline,
+    sortByPriority,
+    isAiSettingsModalOpen,
+    toggleAiSettingsModal
+  } = useTaskStore((state) => ({
     tasks: state.tasks,
     setTasks: state.setTasks,
     focusedTaskId: state.focusedTaskId,
     setFocusedTask: state.setFocusedTask,
     sortByDeadline: state.sortByDeadline,
     sortByPriority: state.sortByPriority,
+    isAiSettingsModalOpen: state.isAiSettingsModalOpen,
+    toggleAiSettingsModal: state.toggleAiSettingsModal,
   }));
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | undefined>(undefined);
-  const [isAiSettingsModalOpen, setIsAiSettingsModalOpen] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [isPomodoroVisible, setIsPomodoroVisible] = useState(false);
   const [theme, setTheme] = useState('light');
@@ -87,14 +97,6 @@ function App() {
     setEditingTask(undefined);
   };
 
-  const openAiSettingsModal = () => {
-    setIsAiSettingsModalOpen(true);
-  };
-
-  const closeAiSettingsModal = () => {
-    setIsAiSettingsModalOpen(false);
-  };
-
   const breakpointColumnsObj = {
     default: 3,
     1100: 2,
@@ -117,7 +119,7 @@ function App() {
           ⏰
         </button>
         <button
-          onClick={openAiSettingsModal}
+          onClick={toggleAiSettingsModal}
           className="settings-btn ripple-btn"
           data-tooltip-id="tooltip"
           data-tooltip-content="Cài đặt AI"
@@ -179,7 +181,7 @@ function App() {
         )}
       </main>
       <TaskModal isOpen={isModalOpen} onClose={closeModal} task={editingTask} />
-      {isAiSettingsModalOpen && <AiSettingsModal onClose={closeAiSettingsModal} />}
+      {isAiSettingsModalOpen && <AiSettingsModal />}
       <Tooltip id="task-tags-tooltip" />
       <Tooltip id="tooltip" />
       {isPomodoroVisible && <PomodoroTimer />}

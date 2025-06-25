@@ -17,12 +17,14 @@ export interface Task {
 interface AiConfig {
   url: string;
   apiKey: string;
+  model: string;
 }
 
 interface TaskState {
   tasks: Task[];
   aiConfig: AiConfig;
   focusedTaskId: number | null;
+  isAiSettingsModalOpen: boolean; // Thêm trạng thái cho modal
   addTask: (task: Omit<Task, 'id'>) => void;
   updateTask: (task: Task) => void;
   deleteTask: (id: number) => void;
@@ -30,6 +32,7 @@ interface TaskState {
   setTasks: (tasks: Task[]) => void;
   setAiConfig: (config: AiConfig) => void;
   setFocusedTask: (id: number | null) => void;
+  toggleAiSettingsModal: () => void; // Thêm hàm toggle
   sortByDeadline: () => void;
   sortByPriority: () => void;
 }
@@ -38,8 +41,9 @@ export const useTaskStore = create<TaskState>()(
   persist(
     (set) => ({
       tasks: [],
-      aiConfig: { url: '', apiKey: '' },
+      aiConfig: { url: '', apiKey: '', model: 'gpt-4o' }, // Đặt giá trị mặc định cho model
       focusedTaskId: null,
+      isAiSettingsModalOpen: false, // Giá trị mặc định
       addTask: (task) =>
         set((state) => ({
           tasks: [...state.tasks, { ...task, id: Date.now() }],
@@ -69,6 +73,7 @@ export const useTaskStore = create<TaskState>()(
       setTasks: (tasks) => set({ tasks }),
       setAiConfig: (config) => set({ aiConfig: config }),
       setFocusedTask: (id) => set({ focusedTaskId: id }),
+      toggleAiSettingsModal: () => set((state) => ({ isAiSettingsModalOpen: !state.isAiSettingsModalOpen })),
       sortByDeadline: () =>
         set((state) => ({
           tasks: [...state.tasks].sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime()),

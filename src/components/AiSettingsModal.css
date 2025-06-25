@@ -3,15 +3,15 @@
 /* Re-using the pop-in animation from TaskModal */
 @keyframes sketch-pop-in {
   0% {
-    transform: translate(-50%, -50%) scale(0.8) rotate(-5deg);
+    transform: scale(0.8) rotate(-5deg);
     opacity: 0;
   }
   70% {
-    transform: translate(-50%, -50%) scale(1.05) rotate(3deg);
+    transform: scale(1.05) rotate(3deg);
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    transform: scale(1) rotate(0deg);
     opacity: 1;
   }
 }
@@ -27,14 +27,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  opacity: 0;
+  z-index: 1000; /* Đảm bảo nó nằm trên cùng */
   transition: opacity 0.25s ease;
 }
 
-.modal-overlay.modal-overlay--after-open {
-  opacity: 1;
-}
+/* Xóa .modal-overlay--after-open vì chúng ta không dùng nó */
 
 .modal-content {
   position: relative; /* For proper centering */
@@ -46,7 +43,7 @@
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.15) !important;
   border: 3px solid rgba(0, 0, 0, 0.8) !important;
   color: var(--text-main);
-  opacity: 0;
+  /* opacity: 0; được xử lý bởi animation */
   animation: sketch-pop-in 0.4s ease-out forwards;
 }
 

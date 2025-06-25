@@ -33,6 +33,7 @@
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 10; /* Đảm bảo nút nằm trên các phần tử khác */
   background-color: var(--color-mint-green);
   color: var(--text-main);
   border: 2px solid rgba(0, 0, 0, 0.7);
@@ -53,4 +54,38 @@
 .ai-analyze-btn:active {
   transform: translateY(-50%) scale(0.98);
   box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+.ai-analyze-btn:disabled,
+.smart-input-container textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #e0e0e0;
+}
+
+.ai-analyze-btn:disabled:hover {
+  transform: translateY(-50%); /* Reset hover effect */
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.error-message {
+  position: absolute;
+  bottom: -2.5rem;
+  left: 0;
+  width: 100%;
+  color: var(--color-urgent-red);
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  text-align: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
