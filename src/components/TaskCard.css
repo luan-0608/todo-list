@@ -77,6 +77,13 @@
   line-height: 1.4;
 }
 
+.task-card-description.expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  white-space: normal; /* Đảm bảo văn bản xuống dòng */
+}
+
 .task-card-tags {
   display: flex;
   flex-wrap: wrap;
@@ -241,6 +248,12 @@
   text-decoration: underline;
   text-decoration-style: wavy;
   text-underline-offset: 3px;
+}
+
+.expand-btn.disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  text-decoration: none;
 }
 
 .task-card:active {

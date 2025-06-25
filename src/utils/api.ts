@@ -25,7 +25,7 @@ const getMockedTask = (text: string): Omit<Task, 'id'> => {
     tags,
     priority,
     deadline: deadline.toISOString().split('T')[0],
-    progress: 0,
+    // progress sẽ được tính toán, không cần trả về
     completedAt: null,
   };
 };
@@ -128,7 +128,7 @@ export const getSmartTask = async (
       tags: taskData.tags || [],
       priority: taskData.priority || 'medium',
       deadline: taskData.deadline || new Date().toISOString().split('T')[0],
-      progress: 0,
+      // progress sẽ được tính toán, không cần trả về
       completedAt: null,
     };
   } catch (e) {

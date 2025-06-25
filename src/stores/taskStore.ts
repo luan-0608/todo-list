@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
-type Priority = 'high' | 'medium' | 'low';
+type Priority = "high" | "medium" | "low";
 
 export interface Task {
   id: number;
@@ -9,9 +9,9 @@ export interface Task {
   description: string;
   tags: string[];
   deadline: string;
-  progress: number;
   priority: Priority;
   completedAt?: string | null;
+  createdAt: string;
 }
 
 interface AiConfig {
@@ -25,7 +25,7 @@ interface TaskState {
   aiConfig: AiConfig;
   focusedTaskId: number | null;
   isAiSettingsModalOpen: boolean; // Thêm trạng thái cho modal
-  addTask: (task: Omit<Task, 'id'>) => void;
+  addTask: (task: Omit<Task, "id" | "createdAt">) => void; // Không cần createdAt khi thêm
   updateTask: (task: Task) => void;
   deleteTask: (id: number) => void;
   toggleTaskStatus: (id: number) => void;
@@ -41,12 +41,19 @@ export const useTaskStore = create<TaskState>()(
   persist(
     (set) => ({
       tasks: [],
-      aiConfig: { url: '', apiKey: '', model: 'gpt-4o' }, // Đặt giá trị mặc định cho model
+      aiConfig: { url: "", apiKey: "", model: "gpt-4o" }, // Đặt giá trị mặc định cho model
       focusedTaskId: null,
       isAiSettingsModalOpen: false, // Giá trị mặc định
       addTask: (task) =>
         set((state) => ({
-          tasks: [...state.tasks, { ...task, id: Date.now() }],
+          tasks: [
+            ...state.tasks,
+            {
+              ...task,
+              id: Date.now(),
+              createdAt: new Date().toISOString().split("T")[0],
+            },
+          ],
         })),
       updateTask: (updatedTask) =>
         set((state) => ({
@@ -64,8 +71,9 @@ export const useTaskStore = create<TaskState>()(
             task.id === id
               ? {
                   ...task,
-                  progress: task.progress === 100 ? 0 : 100,
-                  completedAt: task.progress === 100 ? null : new Date().toISOString().split('T')[0],
+                  completedAt: task.completedAt
+                    ? null
+                    : new Date().toISOString().split("T")[0],
                 }
               : task
           ),
@@ -73,21 +81,44 @@ export const useTaskStore = create<TaskState>()(
       setTasks: (tasks) => set({ tasks }),
       setAiConfig: (config) => set({ aiConfig: config }),
       setFocusedTask: (id) => set({ focusedTaskId: id }),
-      toggleAiSettingsModal: () => set((state) => ({ isAiSettingsModalOpen: !state.isAiSettingsModalOpen })),
-      sortByDeadline: () =>
+      toggleAiSettingsModal: () =>
         set((state) => ({
-          tasks: [...state.tasks].sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime()),
+          isAiSettingsModalOpen: !state.isAiSettingsModalOpen,
         })),
+      sortByDeadline: () =>
+        set((state) => {
+          const priorityOrder = { high: 1, medium: 2, low: 3 };
+          const newTasks = Array.from(state.tasks);
+          newTasks.sort((a, b) => {
+            const aIsCompleted = !!a.completedAt;
+            const bIsCompleted = !!b.completedAt;
+            if (aIsCompleted !== bIsCompleted) {
+              return aIsCompleted ? 1 : -1;
+            }
+            if (a.deadline !== b.deadline) {
+              return a.deadline.localeCompare(b.deadline);
+            }
+            return priorityOrder[a.priority] - priorityOrder[b.priority];
+          });
+          return { tasks: newTasks };
+        }),
       sortByPriority: () =>
         set((state) => {
           const priorityOrder = { high: 1, medium: 2, low: 3 };
-          return {
-            tasks: [...state.tasks].sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]),
-          };
+          const newTasks = Array.from(state.tasks);
+          newTasks.sort((a, b) => {
+            const aIsCompleted = !!a.completedAt;
+            const bIsCompleted = !!b.completedAt;
+            if (aIsCompleted !== bIsCompleted) {
+              return aIsCompleted ? 1 : -1;
+            }
+            return priorityOrder[a.priority] - priorityOrder[b.priority];
+          });
+          return { tasks: newTasks };
         }),
     }),
     {
-      name: 'task-store',
+      name: "task-store",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ tasks: state.tasks, aiConfig: state.aiConfig }),
     }

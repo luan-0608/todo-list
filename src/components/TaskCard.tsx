@@ -12,7 +12,7 @@ type TaskCardProps = Task & {
   isUnfocused: boolean;
 };
 
-const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tags, deadline, progress, priority, isFocused, isUnfocused }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tags, deadline, createdAt, completedAt, priority, isFocused, isUnfocused }) => {
   const { deleteTask, toggleTaskStatus, setFocusedTask } = useTaskStore((state) => ({
     deleteTask: state.deleteTask,
     toggleTaskStatus: state.toggleTaskStatus,
@@ -62,6 +62,39 @@ const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tag
     setFocusedTask(isFocused ? null : id);
   };
 
+  const handleToggleExpand = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài và làm mất focus
+    if (isFocused) {
+      setIsExpanded(!isExpanded);
+    }
+    // Nếu không ở chế độ tập trung, không làm gì cả.
+  };
+
+  const calculateProgress = () => {
+    if (completedAt) return 100;
+
+    const now = new Date().getTime();
+
+    // Phân tích chuỗi createdAt thành ngày địa phương (bỏ qua giờ)
+    const startDate = new Date(createdAt);
+    const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime();
+
+    // Phân tích chuỗi deadline và đặt nó vào cuối ngày đó
+    const deadlineDate = new Date(deadline);
+    const end = new Date(deadlineDate.getFullYear(), deadlineDate.getMonth(), deadlineDate.getDate(), 23, 59, 59, 999).getTime();
+
+    if (now >= end) return 100; // Đã qua hạn
+    if (now < start) return 0;  // Chưa bắt đầu
+
+    const totalDuration = end - start;
+    if (totalDuration <= 0) return now >= end ? 100 : 0;
+
+    const elapsedDuration = now - start;
+    const progress = (elapsedDuration / totalDuration) * 100;
+
+    return Math.min(100, Math.max(0, progress)); // Đảm bảo tiến độ trong khoảng 0-100
+  };
+
   const getPriorityClass = () => {
     return `priority-${priority}`;
   };
@@ -83,7 +116,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tag
       className={`
         task-card
         ${getPriorityClass()}
-        ${progress === 100 ? 'completed' : ''}
+        ${!!completedAt ? 'completed' : ''}
         ${isUnfocused ? 'is-unfocused' : ''}
         ${isFocused ? 'is-focused' : ''}
       `}
@@ -94,15 +127,20 @@ const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tag
           <span className={`task-priority-text priority-${priority}`}>{priority}</span>
         </div>
       </div>
-      <div className="task-card-description-wrapper">
+      <div className="task-card-description-wrapper" onPointerDown={(e) => e.stopPropagation()}>
         <p ref={descriptionRef} className={`task-card-description ${isExpanded ? 'expanded' : ''}`}>{description}</p>
         {isOverflowing && (
-          <button onClick={() => setIsExpanded(!isExpanded)} className="expand-btn">
+          <button
+            onClick={(e) => handleToggleExpand(e)}
+            className={`expand-btn ${!isFocused ? 'disabled' : ''}`}
+            data-tooltip-id="tooltip"
+            data-tooltip-content={!isFocused ? 'Nhấn vào biểu tượng con mắt để tập trung và xem thêm' : ''}
+          >
             {isExpanded ? 'Thu gọn' : 'Xem thêm'}
           </button>
         )}
       </div>
-      <div className="task-card-tags">
+      <div className="task-card-tags" onPointerDown={(e) => e.stopPropagation()}>
         {tags.slice(0, 2).map(tag => <span key={tag} className="task-card-tag">{tag}</span>)}
         {tags.length > 2 && (
           <span
@@ -120,7 +158,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tag
           <span>{deadline}</span>
         </div>
         <div className="task-card-progress-bar">
-          <div className="task-card-progress" style={{ width: `${progress}%` }}></div>
+          <div className="task-card-progress" style={{ width: `${calculateProgress()}%` }}></div>
         </div>
       </div>
       <div className="task-card-actions" onPointerDown={(e) => e.stopPropagation()}>
