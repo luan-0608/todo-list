@@ -1,0 +1,130 @@
+/* AiSettingsModal.css - Hand-drawn sketch style */
+
+/* Re-using the pop-in animation from TaskModal */
+@keyframes sketch-pop-in {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8) rotate(-5deg);
+    opacity: 0;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.05) rotate(3deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(253, 253, 246, 0.7) !important; /* Paper color overlay */
+  backdrop-filter: blur(3px) saturate(120%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.modal-overlay--after-open {
+  opacity: 1;
+}
+
+.modal-content {
+  position: relative; /* For proper centering */
+  background-color: #fff !important;
+  padding: 2rem;
+  border-radius: 12px 8px 15px 10px / 8px 15px 10px 12px !important;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.15) !important;
+  border: 3px solid rgba(0, 0, 0, 0.8) !important;
+  color: var(--text-main);
+  opacity: 0;
+  animation: sketch-pop-in 0.4s ease-out forwards;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--text-main);
+  font-family: 'Patrick Hand', cursive;
+  font-size: 2rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-underline-offset: 6px;
+  text-decoration-color: var(--color-soft-pink);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-light);
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: 2px solid rgba(0,0,0,0.7);
+  border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px;
+  font-size: 1.1rem;
+  font-family: 'Patrick Hand', cursive;
+  background-color: #fff;
+  color: var(--text-main);
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sketch);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent-bright-blue);
+  box-shadow: 0 0 0 4px var(--color-light-lavender), var(--shadow-sketch);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Generic sketch button style for this modal */
+.modal-actions button {
+  padding: 0.7rem 1.5rem;
+  border: 2px solid rgba(0,0,0,0.7);
+  border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 1.1rem;
+  font-family: 'Patrick Hand', cursive;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow-sketch);
+}
+.modal-actions button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+.modal-actions button:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+.button-secondary {
+  background-color: var(--color-soft-pink);
+  color: var(--text-main);
+}

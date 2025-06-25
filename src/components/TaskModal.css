@@ -1,0 +1,62 @@
+/* TaskModal.css - Hand-drawn sketch style */
+.ReactModal__Overlay {
+  background-color: rgba(253, 253, 246, 0.7) !important; /* Paper color overlay */
+  backdrop-filter: blur(3px) saturate(120%);
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+  z-index: 1000;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+@keyframes sketch-pop-in {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8) rotate(-5deg);
+    opacity: 0;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.05) rotate(3deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.ReactModal__Content {
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin-right: -50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 90% !important;
+  max-width: 550px !important;
+  border: 3px solid rgba(0, 0, 0, 0.8) !important;
+  border-radius: 12px 8px 15px 10px / 8px 15px 10px 12px !important;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.15) !important;
+  padding: 2rem !important;
+  background: #fff !important; /* White paper */
+  color: var(--text-main) !important;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.ReactModal__Content--after-open {
+  animation-name: sketch-pop-in;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-out;
+}
+
+.ReactModal__Content--before-close {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9) !important;
+  transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+}

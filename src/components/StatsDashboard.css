@@ -1,0 +1,74 @@
+/* StatsDashboard.css - Hand-drawn sketch style */
+.stats-dashboard-card {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 2px dashed rgba(0,0,0,0.3);
+  padding: 1rem;
+  border-radius: 15px 10px 18px 12px / 12px 18px 10px 15px;
+  display: flex;
+  margin-left: auto;
+}
+
+.stats-summary {
+  display: flex;
+  gap: 1rem;
+}
+
+.stat-item {
+  padding: 0.5rem 1rem;
+  border-radius: 10px 8px 12px 9px / 8px 12px 9px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  border: 2px solid;
+  transition: transform 0.2s ease;
+}
+
+.stat-item:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+/* Assigning pastel colors */
+.stat-item:nth-child(1) {
+  background-color: var(--color-mint-green);
+  border-color: #a9d9ce;
+}
+.stat-item:nth-child(2) {
+  background-color: var(--color-soft-pink);
+  border-color: #eabccf;
+}
+.stat-item:nth-child(3) {
+  background-color: var(--color-light-lavender);
+  border-color: #d3cde0;
+}
+
+.stat-number {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--text-main);
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-top: 0.2rem;
+}
+
+/* Dark Mode Overrides */
+body[data-theme="dark"] .stats-dashboard-card {
+  background-color: rgba(60, 60, 60, 0.5);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+body[data-theme="dark"] .stat-item {
+  color: #2c2c2c; /* Darker text for better contrast */
+}
+
+body[data-theme="dark"] .stat-item .stat-label {
+  color: #5a5a5a;
+}

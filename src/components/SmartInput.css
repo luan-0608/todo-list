@@ -1,0 +1,56 @@
+/* SmartInput.css - Hand-drawn sketch style */
+.smart-input-container {
+  position: relative;
+  width: 60%; /* Or any other width you prefer */
+  margin: 4rem auto; /* Center the container */
+}
+
+.smart-input-container textarea {
+  width: 100%;
+  padding: 1rem 5.5rem 1rem 1.5rem;
+  border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px; /* Wobbly border */
+  border: 2px solid rgba(0, 0, 0, 0.7);
+  background-color: #ffffff;
+  color: var(--text-main);
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  resize: none;
+  overflow-y: hidden;
+  transition: all 0.2s ease;
+  min-height: 60px;
+  box-shadow: var(--shadow-sketch);
+}
+
+.smart-input-container textarea:focus {
+  outline: none;
+  border-color: var(--accent-bright-blue);
+  box-shadow: 0 0 0 4px var(--color-light-lavender), var(--shadow-sketch);
+}
+
+.ai-analyze-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--color-mint-green);
+  color: var(--text-main);
+  border: 2px solid rgba(0, 0, 0, 0.7);
+  padding: 0.5rem 1rem;
+  border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.ai-analyze-btn:hover {
+  transform: translateY(-50%) scale(1.05) rotate(-2deg);
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+}
+
+.ai-analyze-btn:active {
+  transform: translateY(-50%) scale(0.98);
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+}

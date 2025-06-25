@@ -1,0 +1,57 @@
+/* PomodoroTimer.css - Hand-drawn sketch style */
+.pomodoro-timer {
+  background-color: var(--color-pale-yellow);
+  padding: 1rem 1.5rem;
+  border-radius: 10px 8px 12px 9px / 8px 12px 9px 10px;
+  border: 2px solid rgba(0,0,0,0.7);
+  box-shadow: var(--shadow-sketch);
+  text-align: center;
+  width: 220px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1001;
+  transition: transform 0.2s ease;
+}
+
+.pomodoro-timer:hover {
+  transform: rotate(-2deg);
+}
+
+.pomodoro-timer .time {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 3rem;
+  font-weight: 400;
+  color: var(--text-main);
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+}
+
+.pomodoro-timer .buttons {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.pomodoro-timer .buttons button {
+  background-color: var(--color-mint-green);
+  color: var(--text-main);
+  border: 2px solid rgba(0,0,0,0.7);
+  padding: 0.5rem 1rem;
+  border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px;
+  cursor: pointer;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  transition: all 0.15s ease;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.pomodoro-timer .buttons button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+}
+
+.pomodoro-timer .buttons button:active {
+  transform: translateY(0) scale(1);
+  box-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+}

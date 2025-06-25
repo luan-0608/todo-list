@@ -1,0 +1,262 @@
+/* App.css - Hand-drawn sketch style */
+
+:root {
+  --border-sketch: 2px solid rgba(0, 0, 0, 0.7);
+  --shadow-sketch: 3px 3px 0px rgba(0, 0, 0, 0.1);
+  --text-main: #3a3a3a;
+  --text-light: #5a5a5a;
+  --button-text-color: #3a3a3a;
+}
+
+.app-container {
+  padding: 1.5rem 2rem;
+  background-color: transparent; /* Let the body background show through */
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: var(--border-sketch);
+  border-radius: 5px 3px 8px 4px / 3px 5px 4px 8px; /* Wobbly border */
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2.5rem; /* Larger, more playful font size */
+  text-shadow: 1px 1px 0px var(--color-light-lavender);
+}
+
+.header-actions {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.header-right-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+.top-right-controls {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 1000;
+  margin-bottom: 1rem; /* Add space below the controls */
+}
+
+/* Base button style for hand-drawn look */
+.sketch-btn,
+.add-task-btn {
+  color: var(--button-text-color);
+  border: var(--border-sketch);
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px; /* Wobbly border */
+  font-size: 1.1rem;
+  font-family: 'Patrick Hand', cursive;
+  font-weight: 400;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s;
+  box-shadow: var(--shadow-sketch);
+  position: relative;
+}
+
+.sketch-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.sketch-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+.add-task-btn {
+  /* This now inherits from .sketch-btn */
+  background-color: var(--color-pale-yellow);
+}
+.add-task-btn:hover {
+  background-color: #f9f4d5;
+}
+
+.settings-btn {
+  background-color: var(--color-mint-green);
+}
+.settings-btn:hover {
+  background-color: #c1e0d9;
+}
+
+.theme-switcher-btn {
+  background-color: var(--color-soft-pink);
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 1.8rem;
+}
+
+.top-right-controls .ripple-btn {
+  background-color: #fff;
+  border: var(--border-sketch);
+  color: var(--text-main);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.top-right-controls .ripple-btn:hover {
+  transform: translateY(-2px) rotate(-5deg);
+}
+
+/* Masonry Grid Layout */
+.my-masonry-grid {
+  display: flex;
+  margin-left: -2rem; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 2rem; /* gutter size */
+  background-clip: padding-box;
+}
+.my-masonry-grid_column > div {
+  margin-bottom: 2rem;
+}
+
+/* View Switcher as Tabbed Dividers */
+.view-switcher {
+  display: flex;
+  gap: 0; /* Remove gap to make tabs connect */
+  position: relative;
+  top: 2px; /* Align with the bottom border of the header */
+}
+
+.view-switcher button {
+  background-color: var(--color-light-lavender);
+  border: var(--border-sketch);
+  border-bottom: none;
+  color: var(--text-main);
+  border-radius: 10px 10px 0 0;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: -2px; /* Overlap borders */
+  position: relative;
+  z-index: 1;
+  font-size: 1.1rem;
+}
+
+.view-switcher button.active {
+  background-color: var(--background-color);
+  z-index: 3;
+  transform: translateY(2px);
+  border-bottom: 2px solid var(--background-color);
+}
+
+.view-switcher button:not(.active):hover {
+  transform: translateY(-3px);
+  z-index: 2;
+}
+
+.header-title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem; /* Space between title and sort buttons */
+}
+
+.sort-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.sort-controls button {
+  background-color: transparent;
+  border: 2px solid var(--text-light);
+  color: var(--text-light);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+}
+
+.sort-controls button:hover {
+  background-color: var(--color-pale-yellow);
+  color: var(--text-main);
+  border-color: var(--text-main);
+  transform: translateY(-2px);
+}
+
+.tasks-grid-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Focus Mode Overlay */
+.app-container.focus-mode-active {
+  overflow: hidden;
+}
+
+.app-container.focus-mode-active::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(253, 253, 246, 0.7); /* Use paper color for overlay */
+  backdrop-filter: blur(3px) saturate(120%);
+  z-index: 998;
+}
+
+.dashboard-section {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+/* Dark Mode Header Overrides */
+body[data-theme="dark"] .app-header h1 {
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+}
+
+body[data-theme="dark"] .sort-controls button:hover,
+body[data-theme="dark"] .add-task-btn:hover {
+  color: #2c2c2c;
+}
+
+body[data-theme="dark"] .add-task-btn,
+body[data-theme="dark"] .view-switcher button,
+body[data-theme="dark"] .sort-controls button {
+  color: var(--text-light);
+  border-color: var(--text-light);
+}
+
+body[data-theme="dark"] .view-switcher button.active {
+  background-color: var(--background-color);
+  border-bottom-color: var(--background-color);
+  color: var(--text-main);
+}
+
+body[data-theme="dark"] .app-container.focus-mode-active::before {
+  background-color: rgba(44, 44, 44, 0.7);
+}

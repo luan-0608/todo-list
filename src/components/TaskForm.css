@@ -1,0 +1,200 @@
+/* TaskForm.css - Hand-drawn sketch style */
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  font-family: 'Patrick Hand', cursive;
+}
+
+.task-form h2 {
+  margin-top: 0;
+  color: var(--text-main);
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 400;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-underline-offset: 6px;
+  text-decoration-color: var(--color-mint-green);
+}
+
+.task-form input,
+.task-form textarea {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: 2px solid rgba(0,0,0,0.7);
+  border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px;
+  font-size: 1.1rem;
+  font-family: 'Patrick Hand', cursive;
+  background-color: #fff;
+  color: var(--text-main);
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sketch);
+}
+
+.task-form input:focus,
+.task-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-bright-blue);
+  box-shadow: 0 0 0 4px var(--color-light-lavender), var(--shadow-sketch);
+}
+
+.task-form textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.form-actions button {
+  /* Using the .sketch-btn class from App.css would be ideal, but we can replicate it here */
+  padding: 0.7rem 1.5rem;
+  border: 2px solid rgba(0,0,0,0.7);
+  border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 1.1rem;
+  font-family: 'Patrick Hand', cursive;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow-sketch);
+}
+.form-actions button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+.form-actions button:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+.form-actions button[type="submit"] {
+  background-color: var(--color-mint-green);
+  color: var(--text-main);
+}
+
+.form-actions button[type="button"] {
+  background-color: var(--color-soft-pink);
+  color: var(--text-main);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.8rem;
+  align-items: start;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: var(--text-light);
+  padding-left: 0.5rem;
+}
+
+/* React Datepicker & TagsInput Customization */
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.task-form-datepicker {
+  width: 100%;
+}
+
+.react-tagsinput {
+  background-color: #fff;
+  border: 2px solid rgba(0,0,0,0.7);
+  border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px;
+  padding: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sketch);
+}
+
+.react-tagsinput--focused {
+  border-color: var(--accent-bright-blue);
+  box-shadow: 0 0 0 4px var(--color-light-lavender), var(--shadow-sketch);
+}
+
+.react-tagsinput-input {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  color: var(--text-main) !important;
+  font-size: 1.1rem !important;
+  font-family: 'Patrick Hand', cursive !important;
+  margin: 5px !important;
+  flex-grow: 1 !important;
+  padding: 0.5rem !important;
+  width: auto !important;
+  box-shadow: none !important;
+}
+
+.react-tagsinput-tag {
+  background-color: var(--color-light-lavender);
+  color: var(--text-main);
+  border-radius: 12px 10px 14px 9px / 10px 13px 9px 14px;
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 4px 12px;
+  margin: 5px;
+  display: inline-block;
+  font-size: 1rem;
+}
+
+/* Priority Buttons */
+.priority-group {
+  display: flex;
+  border: 2px solid rgba(0,0,0,0.7);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sketch);
+}
+
+.priority-btn {
+  flex: 1;
+  padding: 0.8rem 0.5rem;
+  border: none;
+  background-color: #fff;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+  font-family: 'Patrick Hand', cursive;
+  font-weight: 400;
+}
+
+.priority-btn:not(:last-child) {
+  border-right: 2px solid rgba(0,0,0,0.2);
+}
+
+.priority-btn:hover:not(.active) {
+  background-color: #f0f0f0;
+}
+
+.priority-btn.active {
+  color: var(--text-main);
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.priority-btn.low.active {
+  background-color: var(--priority-low);
+}
+.priority-btn.medium.active {
+  background-color: var(--priority-medium);
+}
+.priority-btn.high.active {
+  background-color: var(--priority-high);
+}
