@@ -51,19 +51,30 @@ body {
 
 /* Dark Theme */
 body[data-theme="dark"] {
-  --text-main: #e8e8e8;
-  --text-light: #b0b0b0;
-  --background-color: #2c2c2c;
-  --button-text-color: #3a3a3a; /* Dark text on light buttons */
-
-  /* Darker, richer pastels for dark mode */
-  --color-mint-green: #82b3a4;
-  --color-soft-pink: #d8a2b9;
-  --color-light-lavender: #b1a8d0;
-  --color-pale-yellow: #dcd8c3;
-
-  --border-sketch: 2px solid rgba(255, 255, 255, 0.6);
-  --shadow-sketch: 3px 3px 0px rgba(0, 0, 0, 0.2);
+  --text-main: #f0f0f0;
+  --text-light: #c0c0c0;
+  --background-color: #222222;
+  --button-text-color: #222222; /* Dark text on light buttons */
+  
+  /* Enhanced pastels for dark mode with better contrast */
+  --color-mint-green: #8ec3b0;
+  --color-soft-pink: #e8b0c5;
+  --color-light-lavender: #bcb2da;
+  --color-pale-yellow: #e5e1c8;
+  
+  /* Dark mode specific variables */
+  --dark-card-bg: #2c2c2c;
+  --dark-input-bg: #333333;
+  --dark-hover-bg: #3a3a3a;
+  --dark-border-color: rgba(255, 255, 255, 0.7);
+  --dark-shadow-color: rgba(0, 0, 0, 0.3);
+  
+  --border-sketch: 2px solid var(--dark-border-color);
+  --shadow-sketch: 3px 3px 0px var(--dark-shadow-color);
+  
+  /* Accent colors with better visibility for dark mode */
+  --accent-bright-red: #ff8080;
+  --accent-bright-blue: #70a9ff;
 }
 
 /* Component-specific overrides for dark mode */
@@ -74,8 +85,30 @@ body[data-theme="dark"] .calendar-view,
 body[data-theme="dark"] .task-form,
 body[data-theme="dark"] .task-modal-content,
 body[data-theme="dark"] .ai-settings-modal-content {
-  background-color: #3a3a3a;
+  background-color: var(--dark-card-bg);
   color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Background with subtle paper texture for dark mode */
+body[data-theme="dark"] {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+}
+
+/* Improved focus effects for dark mode */
+body[data-theme="dark"] .task-form input:focus,
+body[data-theme="dark"] .task-form textarea:focus,
+body[data-theme="dark"] .smart-input-container textarea:focus {
+  box-shadow: 0 0 0 4px rgba(188, 178, 218, 0.3), var(--shadow-sketch);
+  border-color: var(--accent-bright-blue);
+}
+
+/* Improve buttons appearance in dark mode */
+body[data-theme="dark"] .sketch-btn,
+body[data-theme="dark"] .add-task-btn {
+  box-shadow: 2px 2px 0px var(--dark-shadow-color);
 }
 
 body[data-theme="dark"] .view-switcher button.active {

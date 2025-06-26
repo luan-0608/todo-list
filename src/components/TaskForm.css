@@ -46,6 +46,13 @@
   line-height: 1.6;
 }
 
+body[data-theme="dark"] .task-form input,
+body[data-theme="dark"] .task-form textarea {
+  background-color: var(--dark-input-bg);
+  border-color: var(--dark-border-color);
+  color: var(--text-main);
+}
+
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -123,6 +130,11 @@
   box-shadow: var(--shadow-sketch);
 }
 
+body[data-theme="dark"] .react-tagsinput {
+  background-color: var(--dark-input-bg);
+  border-color: var(--dark-border-color);
+}
+
 .react-tagsinput--focused {
   border-color: var(--accent-bright-blue);
   box-shadow: 0 0 0 4px var(--color-light-lavender), var(--shadow-sketch);
@@ -173,6 +185,11 @@
   font-size: 1rem;
   font-family: 'Patrick Hand', cursive;
   font-weight: 400;
+}
+
+body[data-theme="dark"] .priority-btn {
+  background-color: var(--dark-input-bg);
+  color: var(--text-light);
 }
 
 .priority-btn:not(:last-child) {
@@ -241,6 +258,18 @@
   line-height: 1.6;
   max-height: 200px;
   overflow-y: auto;
+}
+
+body[data-theme="dark"] .suggestions-box {
+  background-color: rgba(60, 60, 60, 0.8);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-main);
+}
+
+body[data-theme="dark"] .suggestion-btn,
+body[data-theme="dark"] .suggestion-apply-btn {
+  border-color: var(--dark-border-color);
+  color: var(--button-text-color);
 }
 /* --- Markdown Content Styling --- */
 .markdown-content {
@@ -311,6 +340,12 @@
   border-radius: 4px;
   font-size: 0.9em;
 }
+
+body[data-theme="dark"] .markdown-content pre,
+body[data-theme="dark"] .markdown-content code {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
 /* --- Description Preview Styling --- */
 .description-header {
   display: flex;
@@ -349,6 +384,12 @@
   line-height: 1.6;
   max-height: 300px; /* Thêm giới hạn chiều cao và cuộn */
   overflow-y: auto;
+}
+
+body[data-theme="dark"] .description-preview {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border-color);
+  color: var(--text-main);
 }
 
 .description-preview em {

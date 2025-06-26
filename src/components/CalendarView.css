@@ -7,6 +7,12 @@
   padding: 1.5rem;
   box-shadow: var(--shadow-sketch);
   color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body[data-theme="dark"] .calendar-view {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border-color);
 }
 
 .calendar-header {
@@ -33,7 +39,7 @@
   height: 44px;
   cursor: pointer;
   font-size: 1.5rem;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease, background-color 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,6 +48,15 @@
 .calendar-header button:hover {
   background-color: var(--color-pale-yellow);
   transform: rotate(-5deg) scale(1.05);
+}
+
+body[data-theme="dark"] .calendar-header button {
+  border-color: var(--dark-border-color);
+}
+
+body[data-theme="dark"] .calendar-header button:hover {
+  background-color: var(--dark-hover-bg);
+  color: var(--text-main);
 }
 
 .current-date-display {
@@ -65,6 +80,8 @@
   font-size: 1.1rem;
   font-family: 'Patrick Hand', cursive;
   border-bottom: 3px solid transparent;
+  color: var(--text-main);
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .calendar-mode-switcher button.active {
@@ -89,6 +106,10 @@
   border-left: 2px solid rgba(0,0,0,0.1);
 }
 
+body[data-theme="dark"] .days-grid {
+  border-left-color: rgba(255,255,255,0.15);
+}
+
 .calendar-day {
   border-right: 2px solid rgba(0,0,0,0.1);
   border-bottom: 2px solid rgba(0,0,0,0.1);
@@ -96,6 +117,11 @@
   padding: 0.5rem;
   transition: background-color 0.3s ease;
   position: relative;
+}
+
+body[data-theme="dark"] .calendar-day {
+  border-right-color: rgba(255,255,255,0.15);
+  border-bottom-color: rgba(255,255,255,0.15);
 }
 
 .day-header {
@@ -154,7 +180,7 @@
   font-size: 0.9rem;
   border: 1px solid rgba(0,0,0,0.2);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -163,6 +189,15 @@
 .calendar-task:hover {
   transform: rotate(-2deg) scale(1.05);
   box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+}
+
+body[data-theme="dark"] .calendar-task {
+  border-color: rgba(255,255,255,0.2);
+  color: var(--button-text-color);
+}
+
+body[data-theme="dark"] .calendar-task:hover {
+  box-shadow: 2px 2px 3px var(--dark-shadow-color);
 }
 
 .calendar-task.priority-high {

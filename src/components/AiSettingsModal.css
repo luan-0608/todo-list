@@ -28,7 +28,12 @@
   justify-content: center;
   align-items: center;
   z-index: 1000; /* Đảm bảo nó nằm trên cùng */
-  transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease, background-color 0.3s ease;
+}
+
+body[data-theme="dark"] .modal-overlay {
+  background-color: rgba(25, 25, 25, 0.8) !important; /* Dark overlay */
+  backdrop-filter: blur(4px) saturate(90%);
 }
 
 /* Xóa .modal-overlay--after-open vì chúng ta không dùng nó */
@@ -45,6 +50,13 @@
   color: var(--text-main);
   /* opacity: 0; được xử lý bởi animation */
   animation: sketch-pop-in 0.4s ease-out forwards;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body[data-theme="dark"] .modal-content {
+  background-color: var(--dark-card-bg) !important;
+  border-color: var(--dark-border-color) !important;
+  box-shadow: 6px 6px 0px var(--dark-shadow-color) !important;
 }
 
 .modal-content h2 {
@@ -83,14 +95,24 @@
   font-family: 'Patrick Hand', cursive;
   background-color: #fff;
   color: var(--text-main);
-  transition: all 0.2s;
+  transition: all 0.2s, background-color 0.3s ease, border-color 0.3s ease;
   box-shadow: var(--shadow-sketch);
+}
+
+body[data-theme="dark"] .form-group input {
+  background-color: var(--dark-input-bg);
+  border-color: var(--dark-border-color);
+  color: var(--text-main);
 }
 
 .form-group input:focus {
   outline: none;
   border-color: var(--accent-bright-blue);
   box-shadow: 0 0 0 4px var(--color-light-lavender), var(--shadow-sketch);
+}
+
+body[data-theme="dark"] .form-group input:focus {
+  box-shadow: 0 0 0 4px rgba(188, 178, 218, 0.3), var(--shadow-sketch);
 }
 
 .modal-actions {
@@ -109,7 +131,12 @@
   font-weight: 400;
   font-size: 1.1rem;
   font-family: 'Patrick Hand', cursive;
-  transition: all 0.15s ease;
+  transition: all 0.15s ease, background-color 0.3s ease, border-color 0.3s ease;
+  box-shadow: var(--shadow-sketch);
+}
+
+body[data-theme="dark"] .modal-actions button {
+  border-color: var(--dark-border-color);
   box-shadow: var(--shadow-sketch);
 }
 .modal-actions button:hover {
@@ -124,4 +151,27 @@
 .button-secondary {
   background-color: var(--color-soft-pink);
   color: var(--text-main);
+}
+
+body[data-theme="dark"] .button-secondary {
+  color: var(--button-text-color);
+}
+
+/* Save button */
+.modal-actions button[type="submit"] {
+  background-color: var(--color-mint-green);
+  color: var(--text-main);
+}
+
+body[data-theme="dark"] .modal-actions button[type="submit"] {
+  color: var(--button-text-color);
+}
+
+/* Additional dark mode overrides for other elements */
+body[data-theme="dark"] .modal-content h2 {
+  color: var(--text-main);
+}
+
+body[data-theme="dark"] .form-group label {
+  color: var(--text-light);
 }

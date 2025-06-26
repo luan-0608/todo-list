@@ -234,21 +234,36 @@
   margin-bottom: 2rem;
 }
 
-/* Dark Mode Header Overrides */
+/* Dark Mode Overrides - Enhanced */
 body[data-theme="dark"] .app-header h1 {
-  text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+  color: var(--text-main);
+}
+
+body[data-theme="dark"] .app-header {
+  border-bottom-color: var(--dark-border-color);
 }
 
 body[data-theme="dark"] .sort-controls button:hover,
 body[data-theme="dark"] .add-task-btn:hover {
-  color: #2c2c2c;
+  color: var(--button-text-color);
+  background-color: var(--color-pale-yellow);
+  border-color: var(--dark-border-color);
 }
 
 body[data-theme="dark"] .add-task-btn,
+body[data-theme="dark"] .settings-btn,
+body[data-theme="dark"] .theme-switcher-btn {
+  border-color: var(--dark-border-color);
+  box-shadow: var(--shadow-sketch);
+  transition: all 0.15s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
 body[data-theme="dark"] .view-switcher button,
 body[data-theme="dark"] .sort-controls button {
   color: var(--text-light);
-  border-color: var(--text-light);
+  border-color: var(--dark-border-color);
+  transition: all 0.2s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 body[data-theme="dark"] .view-switcher button.active {
@@ -257,8 +272,29 @@ body[data-theme="dark"] .view-switcher button.active {
   color: var(--text-main);
 }
 
+body[data-theme="dark"] .view-switcher button:not(.active) {
+  background-color: var(--dark-card-bg);
+}
+
+body[data-theme="dark"] .view-switcher button:not(.active):hover {
+  background-color: var(--dark-hover-bg);
+}
+
 body[data-theme="dark"] .app-container.focus-mode-active::before {
-  background-color: rgba(44, 44, 44, 0.7);
+  background-color: rgba(25, 25, 25, 0.8);
+  backdrop-filter: blur(4px) saturate(90%);
+}
+
+body[data-theme="dark"] .top-right-controls .ripple-btn {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border-color);
+  color: var(--text-main);
+  transition: all 0.15s ease, background-color 0.3s ease;
+}
+
+body[data-theme="dark"] .top-right-controls .ripple-btn:hover {
+  background-color: var(--dark-hover-bg);
+  transform: translateY(-2px) rotate(-5deg);
 }
 
 /* --- Responsive Design for Mobile --- */

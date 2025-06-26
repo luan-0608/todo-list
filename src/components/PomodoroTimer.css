@@ -11,7 +11,13 @@
   bottom: 20px;
   right: 20px;
   z-index: 1001;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+body[data-theme="dark"] .pomodoro-timer {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border-color);
+  box-shadow: 4px 4px 0px var(--dark-shadow-color);
 }
 
 .pomodoro-timer:hover {
@@ -24,6 +30,12 @@
   font-weight: 400;
   color: var(--text-main);
   text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+body[data-theme="dark"] .pomodoro-timer .time {
+  color: var(--text-main);
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
 }
 
 .pomodoro-timer .buttons {
@@ -42,8 +54,15 @@
   cursor: pointer;
   font-family: 'Patrick Hand', cursive;
   font-size: 1rem;
-  transition: all 0.15s ease;
+  transition: all 0.15s ease, background-color 0.3s ease, border-color 0.3s ease;
   box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+body[data-theme="dark"] .pomodoro-timer .buttons button {
+  background-color: var(--color-mint-green);
+  color: var(--button-text-color);
+  border-color: var(--dark-border-color);
+  box-shadow: 2px 2px 0px var(--dark-shadow-color);
 }
 
 .pomodoro-timer .buttons button:hover {
@@ -51,7 +70,28 @@
   box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
 }
 
+body[data-theme="dark"] .pomodoro-timer .buttons button:hover {
+  box-shadow: 3px 3px 0px var(--dark-shadow-color);
+}
+
 .pomodoro-timer .buttons button:active {
   transform: translateY(0) scale(1);
   box-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+}
+
+body[data-theme="dark"] .pomodoro-timer .buttons button:active {
+  box-shadow: 1px 1px 0px var(--dark-shadow-color);
+}
+
+/* Status message styles */
+.pomodoro-timer .status {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-style: italic;
+  transition: color 0.3s ease;
+}
+
+body[data-theme="dark"] .pomodoro-timer .status {
+  color: var(--text-light);
 }
