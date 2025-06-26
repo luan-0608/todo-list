@@ -12,11 +12,12 @@ type TaskCardProps = Task & {
   isUnfocused: boolean;
 };
 
-const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tags, deadline, createdAt, completedAt, priority, isFocused, isUnfocused }) => {
-  const { deleteTask, toggleTaskStatus, setFocusedTask } = useTaskStore((state) => ({
+const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tags, deadline, createdAt, completedAt, priority, subtasks, isFocused, isUnfocused }) => {
+  const { deleteTask, toggleTaskStatus, setFocusedTask, toggleSubtaskStatus } = useTaskStore((state) => ({
     deleteTask: state.deleteTask,
     toggleTaskStatus: state.toggleTaskStatus,
     setFocusedTask: state.setFocusedTask,
+    toggleSubtaskStatus: state.toggleSubtaskStatus,
   }));
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -140,6 +141,24 @@ const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tag
           </button>
         )}
       </div>
+      {subtasks && subtasks.length > 0 && (
+        <div className="subtasks-list" onPointerDown={(e) => e.stopPropagation()}>
+          <h5>Công việc con:</h5>
+          {subtasks.map((subtask) => (
+            <div key={subtask.title} className="subtask-item">
+              <input
+                type="checkbox"
+                checked={subtask.completed}
+                onChange={() => toggleSubtaskStatus(id, subtask.title)}
+                id={`subtask-${id}-${subtask.title}`}
+              />
+              <label htmlFor={`subtask-${id}-${subtask.title}`} className={subtask.completed ? 'completed' : ''}>
+                {subtask.title}
+              </label>
+            </div>
+          ))}
+        </div>
+      )}
       <div className="task-card-tags" onPointerDown={(e) => e.stopPropagation()}>
         {tags.slice(0, 2).map(tag => <span key={tag} className="task-card-tag">{tag}</span>)}
         {tags.length > 2 && (

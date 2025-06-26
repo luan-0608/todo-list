@@ -8,11 +8,14 @@ Nhiệm vụ của bạn là phân tích yêu cầu của người dùng, làm g
 1.  **Tóm tắt tiêu đề (title):** Rút gọn yêu cầu của người dùng thành một tiêu đề ngắn gọn, súc tích, chỉ giữ lại ý chính.
 2.  **Tạo mô tả chi tiết (description):**
     *   Dựa vào tiêu đề, hãy tạo một mô tả chi tiết, hữu ích, mang tính gợi mở và hướng dẫn.
-    *   Nếu yêu cầu là một công việc phức tạp (như nấu ăn, lên kế hoạch), hãy chia nhỏ thành các bước, liệt kê nguyên liệu, hoặc đưa ra gợi ý cụ thể.
-    *   **Sử dụng Markdown:** Dùng định dạng Markdown (in đậm, in nghiêng, gạch đầu dòng * hoặc -) để mô tả dễ đọc và có cấu trúc.
-3.  **Sửa lỗi & Thêm dấu:** Tự động sửa lỗi chính tả và thêm dấu tiếng Việt cho cả tiêu đề và mô tả.
-4.  **Suy luận ngữ cảnh:** Phân tích các từ khóa về thời gian (ví dụ: 'ngày mai', 'thứ 6 tới'), độ ưu tiên ('!gấp', '!cao'), và thẻ ('#côngviệc').
-5.  **Định dạng JSON nghiêm ngặt:** LUÔN LUÔN chỉ trả về một đối tượng JSON hợp lệ. KHÔNG trả về bất kỳ văn bản giải thích nào khác.
+    *   Nếu yêu cầu là một công việc phức tạp (như nấu ăn, lên kế hoạch), hãy chia nhỏ thành các bước, liệt kê nguyên liệu, hoặc đưa ra gợi ý cụ thể trong phần mô tả.
+3.  **Tạo công việc con (subtasks):**
+    *   **QUAN TRỌNG:** Nếu yêu cầu của người dùng liệt kê rõ ràng các hành động hoặc các mục cần làm (ví dụ: "đi tắm biển, ăn hải sản, massage"), hãy tách chúng thành các công việc con trong mảng \`subtasks\`.
+    *   Mỗi công việc con phải là một hành động cụ thể.
+    *   Nếu không có công việc con rõ ràng, hãy trả về một mảng rỗng \`[]\`.
+4.  **Sửa lỗi & Thêm dấu:** Tự động sửa lỗi chính tả và thêm dấu tiếng Việt cho cả tiêu đề và mô tả.
+5.  **Suy luận ngữ cảnh:** Phân tích các từ khóa về thời gian (ví dụ: 'ngày mai', 'thứ 6 tới'), độ ưu tiên ('!gấp', '!cao'), và thẻ ('#côngviệc').
+6.  **Định dạng JSON nghiêm ngặt:** LUÔN LUÔN chỉ trả về một đối tượng JSON hợp lệ. KHÔNG trả về bất kỳ văn bản giải thích nào khác.
 
 **ĐỊNH DẠNG JSON BẮT BUỘC:**
 {
@@ -20,7 +23,8 @@ Nhiệm vụ của bạn là phân tích yêu cầu của người dùng, làm g
   "description": "string (chi tiết, sử dụng Markdown, không để trống)",
   "tags": ["string"],
   "priority": "'high' | 'medium' | 'low'",
-  "deadline": "string (YYYY-MM-DD)"
+  "deadline": "string (YYYY-MM-DD)",
+  "subtasks": [{ "title": "string", "completed": false }]
 }
 
 **VÍ DỤ 1 (CÔNG VIỆC ĐƠN GIẢN):**
@@ -31,18 +35,24 @@ Nhiệm vụ của bạn là phân tích yêu cầu của người dùng, làm g
       "description": "Hoàn thành các bài tập toán được giao để chuẩn bị cho buổi học chiều mai.",
       "tags": ["truonghoc"],
       "priority": "high",
-      "deadline": "{tomorrow}"
+      "deadline": "{tomorrow}",
+      "subtasks": []
     }
 
-**VÍ DỤ 2 (CÔNG VIỆC PHỨC TẠP):**
--   **Người dùng:** "cuoi tuan nau lau hai san dai gia dinh #bepnuc"
+**VÍ DỤ 2 (CÔNG VIỆC CÓ CÔNG VIỆC CON):**
+-   **Người dùng:** "Lập kế hoạch đi biển 2 ngày, cần đi tắm biển, ăn hải sản, và massage thư giãn #dulich"
 -   **Bạn trả về:**
     {
-      "title": "Nấu lẩu hải sản cuối tuần",
-      "description": "Chuẩn bị một nồi lẩu hải sản thịnh soạn cho cả gia đình vào cuối tuần.\\n\\n**Gợi ý nguyên liệu:**\\n*   **Nước dùng:** Xương ống, nấm, ngô ngọt, gia vị lẩu.\\n*   **Hải sản:** Tôm, mực, ngao, cá (tùy chọn).\\n*   **Thịt:** Ba chỉ bò Mỹ, gầu bò.\\n*   **Rau:** Rau muống, cải thảo, nấm kim châm.\\n*   **Ăn kèm:** Mì tôm, bún, váng đậu.\\n\\n**Các bước chuẩn bị:**\\n1.  Ninh xương làm nước dùng.\\n2.  Sơ chế sạch sẽ hải sản, thịt và rau.\\n3.  Bày biện các nguyên liệu ra đĩa cho đẹp mắt.",
-      "tags": ["bepnuc"],
+      "title": "Lập kế hoạch đi biển 2 ngày",
+      "description": "Tổ chức một chuyến đi biển kéo dài 2 ngày với các hoạt động thư giãn và ẩm thực.",
+      "tags": ["dulich"],
       "priority": "medium",
-      "deadline": "{weekend}"
+      "deadline": "{weekend}",
+      "subtasks": [
+        { "title": "Đi tắm biển", "completed": false },
+        { "title": "Ăn hải sản", "completed": false },
+        { "title": "Massage thư giãn", "completed": false }
+      ]
     }
 `;
 
@@ -93,6 +103,18 @@ interface ApiResponse {
   usage?: ApiUsage | null; // Đánh dấu là tùy chọn
 }
 
+// --- UTILITY FUNCTIONS ---
+const extractJsonFromString = (text: string): string | null => {
+  const jsonRegex = /```json\s*([\s\S]*?)\s*```|({[\s\S]*})/;
+  const match = text.match(jsonRegex);
+  if (match) {
+    // Nếu có khối ```json, trả về nội dung bên trong. Nếu không, trả về đối tượng JSON đầu tiên tìm thấy.
+    return match[1] || match[2];
+  }
+  return null;
+};
+
+
 // --- API CALL LOGIC ---
 const fetchFromApi = async (
   text: string,
@@ -103,7 +125,6 @@ const fetchFromApi = async (
   const payload = {
     model: modelName,
     messages: [
-      // Đã loại bỏ system prompt để tăng tính tương thích
       { role: "user", content: `${createSystemPrompt()} ${text}` },
     ],
     temperature: 0.7,
@@ -129,21 +150,26 @@ const fetchFromApi = async (
     }
 
     const result: ApiResponse = await response.json();
-    const content = result.choices[0]?.message?.content;
+    const rawContent = result.choices[0]?.message?.content;
 
-    // Log token usage for debugging or monitoring
-    // Log token usage for debugging or monitoring
     if (result.usage) {
       console.log("Token usage:", result.usage);
     } else {
       console.log("Token usage data is not available for this model.");
     }
 
-    if (!content) {
+    if (!rawContent) {
       throw new Error("Không nhận được nội dung hợp lệ từ AI.");
     }
 
-    const taskData = JSON.parse(content);
+    const jsonString = extractJsonFromString(rawContent);
+
+    if (!jsonString) {
+      console.error("Raw content from AI:", rawContent);
+      throw new Error("Không thể trích xuất chuỗi JSON từ phản hồi của AI.");
+    }
+
+    const taskData = JSON.parse(jsonString);
     return {
       title: taskData.title || "Công việc chưa có tiêu đề",
       description: taskData.description || "",
@@ -151,6 +177,7 @@ const fetchFromApi = async (
       priority: taskData.priority || "medium",
       deadline: taskData.deadline || new Date().toISOString().split("T")[0],
       completedAt: null,
+      subtasks: taskData.subtasks || [],
     };
   } catch (error: any) {
     if (error instanceof SyntaxError) {
@@ -180,6 +207,7 @@ const getMockedTask = (text: string): Omit<Task, "id" | "createdAt"> => {
     priority: "medium",
     deadline: new Date().toISOString().split("T")[0],
     completedAt: null,
+    subtasks: [],
   };
 };
 

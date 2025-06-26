@@ -39,6 +39,8 @@
   transform: translate(-50%, -50%) !important;
   width: 90% !important;
   max-width: 550px !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
   border: 3px solid rgba(0, 0, 0, 0.8) !important;
   border-radius: 12px 8px 15px 10px / 8px 15px 10px 12px !important;
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.15) !important;
@@ -47,6 +49,13 @@
   color: var(--text-main) !important;
   opacity: 0;
   animation-fill-mode: forwards;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.ReactModal__Content::-webkit-scrollbar {
+  display: none;
 }
 
 .ReactModal__Content--after-open {

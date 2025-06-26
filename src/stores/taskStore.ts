@@ -3,6 +3,11 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 type Priority = "high" | "medium" | "low";
 
+export interface Subtask {
+  title: string;
+  completed: boolean;
+}
+
 export interface Task {
   id: number;
   title: string;
@@ -12,6 +17,7 @@ export interface Task {
   priority: Priority;
   completedAt?: string | null;
   createdAt: string;
+  subtasks: Subtask[];
 }
 
 interface AiConfig {
@@ -37,6 +43,7 @@ interface TaskState {
   toggleAiSettingsModal: () => void;
   openTaskModal: (task?: Task) => void;
   closeTaskModal: () => void;
+  toggleSubtaskStatus: (taskId: number, subtaskTitle: string) => void;
   sortByDeadline: () => void;
   sortByPriority: () => void;
 }
@@ -101,6 +108,21 @@ export const useTaskStore = create<TaskState>()(
           isTaskModalOpen: false,
           editingTask: null,
         }),
+      toggleSubtaskStatus: (taskId, subtaskTitle) =>
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === taskId
+              ? {
+                  ...task,
+                  subtasks: task.subtasks.map((subtask) =>
+                    subtask.title === subtaskTitle
+                      ? { ...subtask, completed: !subtask.completed }
+                      : subtask
+                  ),
+                }
+              : task
+          ),
+        })),
       sortByDeadline: () =>
         set((state) => {
           const priorityOrder = { high: 1, medium: 2, low: 3 };

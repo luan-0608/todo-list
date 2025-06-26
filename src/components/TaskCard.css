@@ -99,6 +99,84 @@
   border: 1px solid rgba(0,0,0,0.2);
 }
 
+.subtasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(0,0,0,0.2);
+}
+
+.subtasks-list h5 {
+  margin: 0 0 0.2rem 0;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+.subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem; /* Tăng khoảng cách giữa checkbox và label */
+  min-height: 24px; /* Đảm bảo mỗi item có chiều cao tối thiểu */
+}
+
+.subtask-item input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+}
+
+.subtask-item label {
+  position: relative;
+  padding-left: 28px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-main);
+  transition: color 0.2s;
+}
+
+.subtask-item label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(0,0,0,0.7);
+  border-radius: 4px 3px 5px 4px / 3px 5px 4px 4px;
+  background: #fff;
+  transition: all 0.2s;
+}
+
+.subtask-item label:hover::before {
+  border-color: var(--accent-bright-blue);
+}
+
+.subtask-item input[type="checkbox"]:checked + label::before {
+  background-color: var(--color-mint-green);
+  border-color: var(--color-mint-green);
+}
+
+.subtask-item input[type="checkbox"]:checked + label::after {
+  content: '✔';
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%) scale(1.2) rotate(-5deg);
+  color: var(--text-main);
+  font-weight: bold;
+}
+
+.subtask-item label.completed {
+  text-decoration: line-through;
+  color: var(--text-light);
+}
+
+
 .task-card-footer {
   display: flex;
   align-items: center;

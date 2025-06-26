@@ -7,7 +7,7 @@
 
 .smart-input-container textarea {
   width: 100%;
-  padding: 1rem 5.5rem 1rem 1.5rem;
+  padding: 1rem 10rem 1rem 1.5rem; /* Tăng padding bên phải để có không gian cho nút */
   border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px; /* Wobbly border */
   border: 2px solid rgba(0, 0, 0, 0.7);
   background-color: #ffffff;

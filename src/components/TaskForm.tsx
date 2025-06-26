@@ -3,7 +3,7 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import { vi } from 'date-fns/locale/vi';
 registerLocale('vi', vi);
 import TagsInput from 'react-tagsinput';
-import { useTaskStore, type Task } from '../stores/taskStore';
+import { useTaskStore, type Task, type Subtask } from '../stores/taskStore';
 import { createRipple } from '../utils/rippleEffect';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -24,6 +24,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task: initialTask, onClose }) => {
   const [deadline, setDeadline] = useState(task ? new Date(task.deadline) : new Date());
   const [tags, setTags] = useState(task?.tags || []);
   const [priority, setPriority] = useState<Task['priority']>(task?.priority || 'medium');
+  const [subtasks, setSubtasks] = useState<Subtask[]>(task?.subtasks || []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,6 +36,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task: initialTask, onClose }) => {
       tags,
       deadline: deadline.toISOString().split('T')[0],
       priority,
+      subtasks,
     };
 
     if (task) {
@@ -83,6 +85,22 @@ const TaskForm: React.FC<TaskFormProps> = ({ task: initialTask, onClose }) => {
             <button type="button" className={`priority-btn high ${priority === 'high' ? 'active' : ''}`} onClick={() => setPriority('high')}>Cao</button>
           </div>
         </div>
+      </div>
+      <div className="form-group">
+        <label>Công việc con</label>
+        <TagsInput
+          value={subtasks.map(s => s.title)}
+          onChange={(newSubtasks) => {
+            const newSubtaskObjects = newSubtasks.map((title, index) => {
+              const existingSubtask = subtasks[index];
+              return existingSubtask && existingSubtask.title === title
+                ? existingSubtask
+                : { title, completed: false };
+            });
+            setSubtasks(newSubtaskObjects);
+          }}
+          inputProps={{ placeholder: 'Thêm công việc con' }}
+        />
       </div>
       <div className="form-actions">
         <button type="button" className="ripple-btn" onClick={(e) => { onClose(); createRipple(e); }}>Hủy</button>
