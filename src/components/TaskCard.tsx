@@ -21,6 +21,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tag
   }));
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
+  const [showAllSubtasks, setShowAllSubtasks] = useState(false);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
 
   const {
@@ -144,7 +145,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tag
       {subtasks && subtasks.length > 0 && (
         <div className="subtasks-list" onPointerDown={(e) => e.stopPropagation()}>
           <h5>Công việc con:</h5>
-          {subtasks.map((subtask) => (
+          {(showAllSubtasks ? subtasks : subtasks.slice(0, 3)).map((subtask) => (
             <div key={subtask.title} className="subtask-item">
               <input
                 type="checkbox"
@@ -157,6 +158,11 @@ const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tag
               </label>
             </div>
           ))}
+          {subtasks.length > 3 && (
+            <button onClick={() => setShowAllSubtasks(!showAllSubtasks)} className="expand-subtasks-btn">
+              {showAllSubtasks ? 'Thu gọn' : `Xem thêm +${subtasks.length - 3}`}
+            </button>
+          )}
         </div>
       )}
       <div className="task-card-tags" onPointerDown={(e) => e.stopPropagation()}>

@@ -176,6 +176,21 @@
   color: var(--text-light);
 }
 
+.expand-subtasks-btn {
+  background: none;
+  border: none;
+  color: var(--accent-bright-blue);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 4px 0;
+  margin-top: 4px;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-underline-offset: 3px;
+  align-self: flex-start; /* Căn nút sang trái */
+}
+
 
 .task-card-footer {
   display: flex;
