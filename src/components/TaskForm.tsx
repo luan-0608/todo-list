@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { vi } from 'date-fns/locale/vi';
 registerLocale('vi', vi);
@@ -16,7 +16,15 @@ interface TaskFormProps {
 }
 
 const TaskForm: React.FC<TaskFormProps> = ({ task: initialTask, onClose }) => {
-  const { addTask, updateTask, editingTask } = useTaskStore();
+  const { 
+    addTask, 
+    updateTask, 
+    editingTask, 
+    fetchSuggestions, 
+    suggestions, 
+    isSuggestionsLoading,
+    clearSuggestions
+  } = useTaskStore();
   const task = initialTask || editingTask;
 
   const [title, setTitle] = useState(task?.title || '');
@@ -25,6 +33,13 @@ const TaskForm: React.FC<TaskFormProps> = ({ task: initialTask, onClose }) => {
   const [tags, setTags] = useState(task?.tags || []);
   const [priority, setPriority] = useState<Task['priority']>(task?.priority || 'medium');
   const [subtasks, setSubtasks] = useState<Subtask[]>(task?.subtasks || []);
+
+  // Xóa gợi ý cũ khi component bị unmount hoặc khi task thay đổi
+  useEffect(() => {
+    return () => {
+      clearSuggestions();
+    };
+  }, [clearSuggestions, task]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,6 +77,36 @@ const TaskForm: React.FC<TaskFormProps> = ({ task: initialTask, onClose }) => {
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Mô tả"
       />
+      {task && (
+        <div className="suggestion-controls">
+          <button 
+            type="button" 
+            onClick={() => fetchSuggestions(task)} 
+            disabled={isSuggestionsLoading}
+            className="suggestion-btn"
+          >
+            {isSuggestionsLoading ? 'Đang tải...' : 'Gợi ý từ AI'}
+          </button>
+          {suggestions && !isSuggestionsLoading && (
+            <button 
+              type="button" 
+              onClick={() => {
+                setDescription((prev: string) => `${prev}${prev ? '\n\n' : ''}**Gợi ý từ AI:**\n${suggestions}`);
+                clearSuggestions();
+              }}
+              className="suggestion-apply-btn"
+            >
+              Thêm vào mô tả
+            </button>
+          )}
+        </div>
+      )}
+      {isSuggestionsLoading && <div className="suggestions-box">Đang suy nghĩ...</div>}
+      {suggestions && !isSuggestionsLoading && (
+        <div className="suggestions-box">
+          <pre>{suggestions}</pre>
+        </div>
+      )}
       <div className="form-row">
         <div className="form-group">
           <label>Deadline</label>

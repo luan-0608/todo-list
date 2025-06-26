@@ -227,3 +227,81 @@ export const getSmartTask = async (
   }
   return fetchFromApi(text, apiKey, apiUrl, modelName);
 };
+
+// --- SUGGESTION PROMPT ---
+const suggestionPromptTemplate = `Bạn là một chuyên gia tư vấn năng suất và lập kế hoạch.
+Nhiệm vụ của bạn là nhận một công việc (gồm tiêu đề và mô tả) và đưa ra các gợi ý cụ thể, các bước thực hiện chi tiết để hoàn thành công việc đó.
+
+**QUY TẮC:**
+1.  **Phân tích công việc:** Đọc kỹ tiêu đề và mô tả để hiểu rõ mục tiêu.
+2.  **Chia nhỏ công việc:** Nếu công việc lớn, hãy chia nó thành các bước nhỏ, rõ ràng, có thể hành động được.
+3.  **Đưa ra lời khuyên hữu ích:** Cung cấp các mẹo, thủ thuật, hoặc các phương pháp tốt nhất liên quan đến công việc.
+4.  **Sử dụng Markdown:** Định dạng câu trả lời của bạn bằng Markdown (gạch đầu dòng, in đậm) để dễ đọc.
+5.  **Tập trung vào hành động:** Câu trả lời của bạn nên tập trung vào "làm thế nào để thực hiện".
+
+**VÍ DỤ:**
+-   **Công việc nhận được:**
+    {
+      "title": "Học React trong 1 tuần",
+      "description": "Cần học những kiến thức cơ bản về React để chuẩn bị cho dự án mới."
+    }
+-   **Bạn trả về (văn bản thuần túy, sử dụng Markdown):**
+    "Dưới đây là lộ trình gợi ý để bạn bắt đầu với React trong một tuần:\n\n**Ngày 1-2: Nền tảng JavaScript & JSX**\n*   Ôn lại các khái niệm ES6 quan trọng: \`let\`, \`const\`, arrow functions, \`map\`, \`filter\`.\n*   Tìm hiểu về JSX - cú pháp đặc biệt của React.\n\n**Ngày 3-4: Components & Props**\n*   Hiểu về Function Components và Class Components.\n*   Học cách truyền dữ liệu từ component cha xuống con bằng \`props\`.\n\n**Ngày 5-6: State & Lifecycle**\n*   Nắm vững hook \`useState\` để quản lý trạng thái.\n*   Tìm hiểu hook \`useEffect\` để xử lý các side effects (ví dụ: gọi API).\n\n**Ngày 7: Luyện tập**\n*   Xây dựng một ứng dụng To-do list đơn giản để củng cố kiến thức."
+
+---
+**CÔNG VIỆC CẦN GỢI Ý:**
+{task}
+`;
+
+export const getTaskSuggestions = async (
+  task: Task,
+  apiKey: string,
+  apiUrl: string,
+  modelName: string
+): Promise<string> => {
+  const prompt = suggestionPromptTemplate.replace('{task}', JSON.stringify({ title: task.title, description: task.description }, null, 2));
+
+  const payload = {
+    model: modelName,
+    messages: [{ role: "user", content: prompt }],
+    temperature: 0.5,
+  };
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Lỗi API: ${response.statusText}`);
+    }
+
+    const result: ApiResponse = await response.json();
+    const content = result.choices[0]?.message?.content;
+
+    if (!content) {
+      throw new Error("Không nhận được gợi ý từ AI.");
+    }
+
+    return content;
+  } catch (error: any) {
+    console.error("Lỗi khi lấy gợi ý:", error);
+    if (error instanceof TypeError && error.message === "Failed to fetch") {
+      throw new Error(
+        "Lỗi kết nối mạng hoặc CORS: Không thể gửi yêu cầu đến máy chủ AI. Vui lòng kiểm tra kết nối internet và cấu hình CORS."
+      );
+    }
+    if (error instanceof SyntaxError) {
+      console.error("JSON Parsing Error in suggestions:", error);
+      throw new Error("AI đã trả về một định dạng không hợp lệ cho gợi ý.");
+    }
+    throw new Error(
+      error.message || "Đã xảy ra lỗi khi kết nối đến dịch vụ AI."
+    );
+  }
+};

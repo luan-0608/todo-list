@@ -198,3 +198,47 @@
 .priority-btn.high.active {
   background-color: var(--priority-high);
 }
+
+.suggestion-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: -1rem; /* Kéo lên gần hơn với ô mô tả */
+}
+
+.suggestion-btn, .suggestion-apply-btn {
+  padding: 0.4rem 0.8rem;
+  border: 2px solid rgba(0,0,0,0.7);
+  border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px;
+  cursor: pointer;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow-sketch);
+}
+
+.suggestion-btn {
+  background-color: var(--color-light-lavender);
+}
+
+.suggestion-apply-btn {
+  background-color: var(--color-pale-yellow);
+}
+
+.suggestion-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.suggestions-box {
+  background-color: #f9f9f9;
+  border: 2px dashed rgba(0,0,0,0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  white-space: pre-wrap; /* Giữ nguyên định dạng xuống dòng */
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-height: 200px;
+  overflow-y: auto;
+}
