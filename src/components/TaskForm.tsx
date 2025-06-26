@@ -11,12 +11,14 @@ import 'react-tagsinput/react-tagsinput.css';
 import './TaskForm.css';
 
 interface TaskFormProps {
-  task?: Task;
+  task?: Task | null;
   onClose: () => void;
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ task, onClose }) => {
-  const { addTask, updateTask } = useTaskStore();
+const TaskForm: React.FC<TaskFormProps> = ({ task: initialTask, onClose }) => {
+  const { addTask, updateTask, editingTask } = useTaskStore();
+  const task = initialTask || editingTask;
+
   const [title, setTitle] = useState(task?.title || '');
   const [description, setDescription] = useState(task?.description || '');
   const [deadline, setDeadline] = useState(task ? new Date(task.deadline) : new Date());
@@ -32,7 +34,6 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onClose }) => {
       description,
       tags,
       deadline: deadline.toISOString().split('T')[0],
-      progress: task?.progress || 0,
       priority,
     };
 

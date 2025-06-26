@@ -24,15 +24,19 @@ interface TaskState {
   tasks: Task[];
   aiConfig: AiConfig;
   focusedTaskId: number | null;
-  isAiSettingsModalOpen: boolean; // Thêm trạng thái cho modal
-  addTask: (task: Omit<Task, "id" | "createdAt">) => void; // Không cần createdAt khi thêm
+  isAiSettingsModalOpen: boolean;
+  isTaskModalOpen: boolean;
+  editingTask: Task | null;
+  addTask: (task: Omit<Task, "id" | "createdAt">) => void;
   updateTask: (task: Task) => void;
   deleteTask: (id: number) => void;
   toggleTaskStatus: (id: number) => void;
   setTasks: (tasks: Task[]) => void;
   setAiConfig: (config: AiConfig) => void;
   setFocusedTask: (id: number | null) => void;
-  toggleAiSettingsModal: () => void; // Thêm hàm toggle
+  toggleAiSettingsModal: () => void;
+  openTaskModal: (task?: Task) => void;
+  closeTaskModal: () => void;
   sortByDeadline: () => void;
   sortByPriority: () => void;
 }
@@ -41,9 +45,11 @@ export const useTaskStore = create<TaskState>()(
   persist(
     (set) => ({
       tasks: [],
-      aiConfig: { url: "", apiKey: "", model: "gpt-4o" }, // Đặt giá trị mặc định cho model
+      aiConfig: { url: "", apiKey: "", model: "gpt-4o" },
       focusedTaskId: null,
-      isAiSettingsModalOpen: false, // Giá trị mặc định
+      isAiSettingsModalOpen: false,
+      isTaskModalOpen: false,
+      editingTask: null,
       addTask: (task) =>
         set((state) => ({
           tasks: [
@@ -85,6 +91,16 @@ export const useTaskStore = create<TaskState>()(
         set((state) => ({
           isAiSettingsModalOpen: !state.isAiSettingsModalOpen,
         })),
+      openTaskModal: (task) =>
+        set({
+          isTaskModalOpen: true,
+          editingTask: task ? task : null,
+        }),
+      closeTaskModal: () =>
+        set({
+          isTaskModalOpen: false,
+          editingTask: null,
+        }),
       sortByDeadline: () =>
         set((state) => {
           const priorityOrder = { high: 1, medium: 2, low: 3 };

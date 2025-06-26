@@ -7,7 +7,7 @@ import './TaskModal.css';
 interface TaskModalProps {
   isOpen: boolean;
   onClose: () => void;
-  task?: Task;
+  task?: Task | null;
 }
 
 Modal.setAppElement('#root');
