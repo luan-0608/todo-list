@@ -1,4 +1,5 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import './TaskCard.css';
 import { FiClock, FiCheckCircle, FiEdit, FiTrash2, FiEye } from 'react-icons/fi';
 import { useSortable } from '@dnd-kit/sortable';
@@ -22,7 +23,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tag
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [showAllSubtasks, setShowAllSubtasks] = useState(false);
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const descriptionRef = useRef<HTMLDivElement>(null);
 
   const {
     attributes,
@@ -130,7 +131,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ onEdit, id, title, description, tag
         </div>
       </div>
       <div className="task-card-description-wrapper" onPointerDown={(e) => e.stopPropagation()}>
-        <p ref={descriptionRef} className={`task-card-description ${isExpanded ? 'expanded' : ''}`}>{description}</p>
+        <div ref={descriptionRef} className={`task-card-description markdown-content ${isExpanded ? 'expanded' : ''}`}>
+          <ReactMarkdown>{description}</ReactMarkdown>
+        </div>
         {isOverflowing && (
           <button
             onClick={(e) => handleToggleExpand(e)}

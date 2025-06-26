@@ -242,3 +242,115 @@
   max-height: 200px;
   overflow-y: auto;
 }
+/* --- Markdown Content Styling --- */
+.markdown-content {
+  /* Kế thừa font chữ và màu sắc từ suggestions-box */
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4 {
+  margin-top: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-main);
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-mint-green);
+}
+
+.markdown-content h1 { font-size: 1.5em; }
+.markdown-content h2 { font-size: 1.3em; }
+.markdown-content h3 { font-size: 1.2em; }
+.markdown-content h4 { font-size: 1.1em; }
+
+
+.markdown-content p {
+  margin-bottom: 0.8rem;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-content li {
+  margin-bottom: 0.5rem;
+}
+
+.markdown-content strong {
+  font-weight: 600; /* Đậm hơn một chút */
+  color: var(--text-main);
+}
+
+.markdown-content a {
+  color: var(--accent-bright-blue);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+.markdown-content a:hover {
+  color: #0056b3;
+}
+
+.markdown-content pre {
+  background-color: #e9e9e9;
+  padding: 0.8rem;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.markdown-content code {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #e9e9e9;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+/* --- Description Preview Styling --- */
+.description-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem; /* Giống với .form-group gap */
+}
+
+.description-header label {
+  margin: 0; /* Ghi đè margin mặc định nếu có */
+}
+
+.preview-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.2rem;
+  line-height: 1;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.preview-toggle-btn:hover {
+  background-color: rgba(0,0,0,0.08);
+}
+
+.description-preview {
+  width: 100%;
+  min-height: 120px; /* Giống với textarea */
+  padding: 0.8rem 1.2rem;
+  border: 2px solid rgba(0,0,0,0.7);
+  border-radius: 8px 6px 10px 7px / 7px 9px 6px 10px;
+  background-color: #fdfdfd; /* Hơi khác so với textarea để phân biệt */
+  box-shadow: var(--shadow-sketch);
+  line-height: 1.6;
+  max-height: 300px; /* Thêm giới hạn chiều cao và cuộn */
+  overflow-y: auto;
+}
+
+.description-preview em {
+  color: var(--text-light);
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { vi } from 'date-fns/locale/vi';
 registerLocale('vi', vi);
@@ -33,6 +34,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task: initialTask, onClose }) => {
   const [tags, setTags] = useState(task?.tags || []);
   const [priority, setPriority] = useState<Task['priority']>(task?.priority || 'medium');
   const [subtasks, setSubtasks] = useState<Subtask[]>(task?.subtasks || []);
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
 
   // Xóa gợi ý cũ khi component bị unmount hoặc khi task thay đổi
   useEffect(() => {
@@ -72,11 +74,31 @@ const TaskForm: React.FC<TaskFormProps> = ({ task: initialTask, onClose }) => {
         placeholder="Tên công việc"
         required
       />
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Mô tả"
-      />
+      <div className="form-group">
+        <div className="description-header">
+          <label htmlFor="description">Mô tả</label>
+          <button
+            type="button"
+            className="preview-toggle-btn"
+            onClick={() => setIsPreviewMode(!isPreviewMode)}
+            title={isPreviewMode ? 'Chỉnh sửa' : 'Xem trước'}
+          >
+            {isPreviewMode ? '✏️' : '👁️'}
+          </button>
+        </div>
+        {isPreviewMode ? (
+          <div className="description-preview markdown-content">
+            <ReactMarkdown>{description || '*Chưa có mô tả*'}</ReactMarkdown>
+          </div>
+        ) : (
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Mô tả (hỗ trợ Markdown)"
+          />
+        )}
+      </div>
       {task && (
         <div className="suggestion-controls">
           <button 
@@ -103,8 +125,8 @@ const TaskForm: React.FC<TaskFormProps> = ({ task: initialTask, onClose }) => {
       )}
       {isSuggestionsLoading && <div className="suggestions-box">Đang suy nghĩ...</div>}
       {suggestions && !isSuggestionsLoading && (
-        <div className="suggestions-box">
-          <pre>{suggestions}</pre>
+        <div className="suggestions-box markdown-content">
+          <ReactMarkdown>{suggestions}</ReactMarkdown>
         </div>
       )}
       <div className="form-row">
