@@ -89,3 +89,52 @@
     transform: translateY(0);
   }
 }
+@media (max-width: 768px) {
+  .smart-input-container {
+    width: 100%;
+    margin: 1.5rem 0;
+  }
+
+  .smart-input-container textarea {
+    font-size: 1rem;
+    min-height: 46px;
+    padding: 0.7rem 7.5rem 0.7rem 0.8rem; /* Giảm padding */
+    border-width: 1.5px; /* Viền mỏng hơn trên điện thoại */
+  }
+
+  .ai-analyze-btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.7rem;
+    right: 8px;
+    border-width: 1.5px; /* Viền mỏng hơn trên điện thoại */
+  }
+  
+  .error-message {
+    font-size: 0.9rem;
+    bottom: -2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .smart-input-container {
+    margin: 1.2rem 0;
+  }
+  
+  .smart-input-container textarea {
+    font-size: 0.95rem;
+    min-height: 40px;
+    padding: 0.6rem 6.5rem 0.6rem 0.7rem; /* Giảm padding thêm nữa */
+  }
+  
+  .ai-analyze-btn {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.6rem;
+    right: 6px;
+  }
+  
+  /* Cải thiện cảm giác khi nhấn nút */
+  .ai-analyze-btn:active {
+    transform: translateY(-50%) scale(0.95);
+    box-shadow: none;
+  }
+}

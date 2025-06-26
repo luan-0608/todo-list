@@ -260,3 +260,146 @@ body[data-theme="dark"] .view-switcher button.active {
 body[data-theme="dark"] .app-container.focus-mode-active::before {
   background-color: rgba(44, 44, 44, 0.7);
 }
+
+/* --- Responsive Design for Mobile --- */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 0.8rem;
+  }
+
+  /* Reset absolute positioning */
+  .top-right-controls {
+    position: relative;
+    top: auto;
+    right: auto;
+    justify-content: center; /* Center controls */
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: center; /* Center align elements */
+    gap: 1rem; /* Reduce gap between sections */
+    margin-bottom: 1rem;
+    border: none; /* Remove border on mobile header */
+    padding-bottom: 0;
+  }
+
+  .header-title-wrapper {
+    width: 100%;
+    text-align: center; /* Center the title */
+  }
+
+  .app-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem; /* Reduce space below title */
+  }
+
+  .header-actions {
+    width: 100%;
+    display: flex; /* Change to flex for better mobile layout */
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  /* Điều chỉnh lại view switcher để đảm bảo hiển thị đúng trên mobile */
+  .header-right-controls {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+  }
+  
+  .view-switcher {
+    width: 100%;
+    display: flex;
+    margin: 0.5rem 0;
+    position: static; /* Ghi đè position relative */
+    top: 0;
+  }
+
+  .view-switcher button {
+    flex-grow: 1;
+    padding: 0.6rem 0.5rem; /* Reduce padding */
+    font-size: 0.95rem; /* Slightly smaller font */
+    border-radius: 6px;
+    border: var(--border-sketch); /* Đảm bảo nút có viền */
+    border-bottom: var(--border-sketch); /* Hiển thị viền dưới */
+    margin-right: 0.5rem;
+  }
+  
+  .view-switcher button:last-child {
+    margin-right: 0;
+  }
+
+  .sort-controls {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .sort-controls button {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  /* Fix main content width */
+  .tasks-grid-container {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  /* Masonry Grid to single column with proper spacing */
+  .my-masonry-grid {
+    display: block;
+    margin-left: 0;
+    width: 100%;
+  }
+  .my-masonry-grid_column {
+    padding-left: 0;
+  }
+  .my-masonry-grid_column > div {
+    margin-bottom: 1.2rem; /* Reduce spacing between cards on mobile */
+  }
+
+  .dashboard-section {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 1rem; /* Reduce gap */
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: 0.6rem;
+  }
+  
+  .app-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .header-actions {
+    gap: 0.6rem;
+  }
+
+  .view-switcher button {
+    padding: 0.5rem 0.4rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Improve button sizes on smaller screens */
+  .sketch-btn,
+  .add-task-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+  
+  /* Make controls more compact */
+  .top-right-controls .ripple-btn {
+    width: 42px;
+    height: 42px;
+  }
+}

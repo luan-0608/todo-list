@@ -354,3 +354,88 @@
 .description-preview em {
   color: var(--text-light);
 }
+@media (max-width: 768px) {
+  .task-form {
+    gap: 1rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .task-form h2 {
+    font-size: 1.7rem;
+    margin-bottom: 0.8rem;
+    text-underline-offset: 4px; /* Giảm khoảng cách gạch chân */
+  }
+  
+  .form-group {
+    gap: 0.4rem; /* Giảm khoảng cách giữa label và input */
+  }
+  
+  .form-group label {
+    font-size: 1.1rem;
+  }
+
+  .task-form input,
+  .task-form textarea {
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .task-form textarea {
+    min-height: 100px; /* Giảm chiều cao tối thiểu */
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .form-actions button {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+  
+  /* Điều chỉnh các nút gợi ý */
+  .suggestion-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .suggestion-btn, .suggestion-apply-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Điều chỉnh hộp gợi ý */
+  .suggestions-box {
+    max-height: 150px; /* Giảm chiều cao tối đa */
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .task-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.7rem;
+  }
+  
+  .form-group label {
+    font-size: 1rem;
+  }
+  
+  .task-form input,
+  .task-form textarea {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.95rem;
+  }
+  
+  /* Điều chỉnh nhóm lựa chọn ưu tiên */
+  .priority-btn {
+    font-size: 0.9rem;
+    padding: 0.7rem 0.4rem;
+  }
+}

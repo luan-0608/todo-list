@@ -472,3 +472,99 @@ body[data-theme="dark"] .task-card.is-focused {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+@media (max-width: 768px) {
+  .task-card {
+    padding: 0.8rem;
+    max-width: 100%; /* Ghi đè max-width trên di động */
+    margin-bottom: 1.2rem; /* Giảm khoảng cách giữa các card */
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.15); /* Giảm đổ bóng */
+  }
+
+  .task-card-title {
+    font-size: 1.2rem; /* Giảm kích thước font */
+  }
+  
+  /* Giảm khoảng cách các phần tử trong card */
+  .task-card {
+    gap: 0.6rem;
+  }
+  
+  /* Cải thiện hiển thị của các tag */
+  .task-card-tags {
+    gap: 0.4rem;
+  }
+  
+  .task-card-tag {
+    padding: 2px 8px;
+    font-size: 0.75rem;
+  }
+
+  /* Điều chỉnh lại các nút hành động cho dễ nhấn */
+  .task-card-actions {
+    opacity: 1; /* Luôn hiển thị trên điện thoại */
+    transform: translateY(0);
+    position: relative;
+    top: 0;
+    right: 0;
+    display: flex;
+    background-color: rgba(0,0,0,0.02);
+    padding: 0.5rem 0.3rem;
+    margin: 0.3rem -0.8rem -0.8rem; /* Extend to card edges */
+    border-top: 1px dashed rgba(0,0,0,0.1); /* Thêm đường phân cách */
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    justify-content: space-around;
+  }
+
+  .task-card:hover .task-card-actions {
+    transform: none;
+  }
+
+  .action-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
+  }
+
+  /* Vô hiệu hóa hiệu ứng hover trên điện thoại */
+  .task-card:hover {
+    transform: none;
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Điều chỉnh card khi focus */
+  .task-card.is-focused {
+    transform: scale(1.02);
+  }
+  
+  /* Cải thiện hiển thị mô tả */
+  .task-card-description {
+    font-size: 0.95rem;
+    -webkit-line-clamp: 2; /* Hiển thị ít dòng hơn */
+  }
+  
+  /* Điều chỉnh footer của card */
+  .task-card-footer {
+    padding-top: 0.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .task-card {
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+  }
+  
+  .task-card-title {
+    font-size: 1.1rem;
+  }
+  
+  .action-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .task-card-actions {
+    padding: 0.4rem 0.2rem;
+  }
+}
