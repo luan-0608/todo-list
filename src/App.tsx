@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 
-import TaskModal from './components/TaskModal';
 import AiSettingsModal from './components/AiSettingsModal';
-import SmartInput from './components/SmartInput';
+import TaskModal from './features/tasks/components/TaskModal';
 import PomodoroTimer from './components/PomodoroTimer';
-import AppHeader from './components/AppHeader';
-import TopControls from './components/TopControls';
-import TaskView from './components/TaskView';
+import MainLayout from './layouts/MainLayout';
 
 import { useTaskStore } from './stores/taskStore';
+import { useTheme } from './hooks/useTheme';
 import './App.css';
+import './features/tasks/TaskStyles.css';
 
 type ViewMode = 'grid' | 'calendar';
 
@@ -33,36 +32,21 @@ function App() {
 
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [isPomodoroVisible, setIsPomodoroVisible] = useState(false);
-  const [theme, setTheme] = useState('light');
-  const [colorTheme] = useState('default');
-
-  useEffect(() => {
-    document.body.setAttribute('data-theme', theme);
-    document.body.setAttribute('data-color-theme', colorTheme);
-  }, [theme, colorTheme]);
-
-  const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div
       className={`app-container ${focusedTaskId ? 'focus-mode-active' : ''}`}
-      data-theme={theme}
       onClick={focusedTaskId ? () => setFocusedTask(null) : undefined}
     >
-      <TopControls
+      <MainLayout
         theme={theme}
         onToggleTheme={toggleTheme}
         isPomodoroVisible={isPomodoroVisible}
         onTogglePomodoro={() => setIsPomodoroVisible(!isPomodoroVisible)}
-      />
-      <SmartInput />
-      <AppHeader
         viewMode={viewMode}
         onViewModeChange={setViewMode}
       />
-      <TaskView viewMode={viewMode} />
       <TaskModal
         isOpen={isTaskModalOpen}
         onClose={closeTaskModal}
