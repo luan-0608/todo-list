@@ -3,7 +3,7 @@
   background-color: rgba(253, 253, 246, 0.7) !important; /* Paper color overlay */
   backdrop-filter: blur(3px) saturate(120%);
   opacity: 0;
-  transition: opacity 250ms ease-in-out;
+  transition: opacity 50ms ease-in-out;
   z-index: 1000;
 }
 
@@ -67,5 +67,5 @@
 .ReactModal__Content--before-close {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.9) !important;
-  transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+  transition: opacity 50ms ease-in-out, transform 50ms ease-in-out;
 }

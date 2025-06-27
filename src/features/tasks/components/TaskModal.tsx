@@ -17,7 +17,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, task }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
       contentLabel="Task Modal"
-      closeTimeoutMS={200}
+      closeTimeoutMS={50}
     >
       <TaskForm task={task} onClose={onClose} />
     </Modal>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTaskStore } from '../stores/taskStore';
 import { createRipple } from '../utils/rippleEffect';
 import './AiSettingsModal.css';
@@ -24,7 +25,7 @@ const AiSettingsModal: React.FC<AiSettingsModalProps> = () => {
     toggleAiSettingsModal();
   }
 
-  return (
+  return createPortal(
     <div className="modal-overlay" onClick={toggleAiSettingsModal}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <h2>Cấu hình AI</h2>
@@ -67,7 +68,8 @@ const AiSettingsModal: React.FC<AiSettingsModalProps> = () => {
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

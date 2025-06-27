@@ -3,15 +3,15 @@
 /* Re-using the pop-in animation from TaskModal */
 @keyframes sketch-pop-in {
   0% {
-    transform: scale(0.8) rotate(-5deg);
+    transform: translate(-50%, -50%) scale(0.8) rotate(-5deg);
     opacity: 0;
   }
   70% {
-    transform: scale(1.05) rotate(3deg);
+    transform: translate(-50%, -50%) scale(1.05) rotate(3deg);
     opacity: 1;
   }
   100% {
-    transform: scale(1) rotate(0deg);
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
     opacity: 1;
   }
 }
@@ -27,7 +27,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Đảm bảo nó nằm trên cùng */
+  z-index: 2000; /* Tăng z-index để đảm bảo nó luôn ở trên cùng */
   transition: opacity 0.25s ease, background-color 0.3s ease;
 }
 
@@ -39,7 +39,10 @@ body[data-theme="dark"] .modal-overlay {
 /* Xóa .modal-overlay--after-open vì chúng ta không dùng nó */
 
 .modal-content {
-  position: relative; /* For proper centering */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: #fff !important;
   padding: 2rem;
   border-radius: 12px 8px 15px 10px / 8px 15px 10px 12px !important;
@@ -48,7 +51,6 @@ body[data-theme="dark"] .modal-overlay {
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.15) !important;
   border: 3px solid rgba(0, 0, 0, 0.8) !important;
   color: var(--text-main);
-  /* opacity: 0; được xử lý bởi animation */
   animation: sketch-pop-in 0.4s ease-out forwards;
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -174,4 +176,37 @@ body[data-theme="dark"] .modal-content h2 {
 
 body[data-theme="dark"] .form-group label {
   color: var(--text-light);
+}
+
+/* Điều chỉnh cho màn hình di động */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    width: 95%;
+    padding: 1rem;
+  }
+  
+  .modal-content h2 {
+    font-size: 1.6rem;
+  }
+  
+  .form-group label {
+    font-size: 1.1rem;
+  }
+  
+  .form-group input {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .modal-actions button {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+  }
 }
